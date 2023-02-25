@@ -35,7 +35,7 @@ exports.postRes = function (request, response) {
       "🚀 ~ file: ccavResponseHandler.js:34 ~ data1:",
       data1.merchant_param2
     );
-    if (data1.merchant_param2 === "localhost") {
+    if (data1?.merchant_param2 === "localhost") {
       response
         .writeHead(301, {
           Location: `http://localhost:3000/orderSuccess/?${nFinal}`,
@@ -45,7 +45,7 @@ exports.postRes = function (request, response) {
     } else {
       response
         .writeHead(301, {
-          Location: `https://${data1.merchant_param}/orderSuccess/?${nFinal}`,
+          Location: `https://${data1.merchant_param2}/orderSuccess/?${nFinal}`,
         })
         .end();
     }
