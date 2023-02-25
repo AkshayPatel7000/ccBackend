@@ -1,5 +1,6 @@
 var express = require("express");
 var cors = require("cors");
+require("dotenv").config({ path: __dirname + "/.env" });
 var app = express();
 var http = require("http"),
   fs = require("fs"),
@@ -8,13 +9,18 @@ var http = require("http"),
   ccavReqHandler = require("./ccavRequestHandler.js"),
   ccavResHandler = require("./ccavResponseHandler.js"),
   ccavD = require("./ccavD.js");
-
+const token = process.env["IS_PRODUCTION"];
 app.use(express.static("public"));
 app.use(cors());
 app.set("views", __dirname + "/public");
 app.engine("html", require("ejs").renderFile);
 
 app.get("/", function (req, res) {
+  console.log(
+    "🚀 ~ file: ccavResponseHandler.js:8 ~ IS_PRODUCTION:",
+    token,
+    token === "true" ? "prod" : "dev"
+  );
   res.render("dataFrom.html");
 });
 

@@ -1,13 +1,17 @@
 var ccav = require("./ccavutil.js");
 
 exports.postReq = function (request, response) {
+  const IS_PRODUCTION = process.env["IS_PRODUCTION"];
+  const PROD_ACCESS_CODE = process.env["PROD_ACCESS_CODE"];
+  const DEV_ACCESS_CODE = process.env["DEV_ACCESS_CODE"];
+  const PROD_WORKING_KEY = process.env["PROD_WORKING_KEY"];
+  const DEV_WORKING_KEY = process.env["DEV_WORKING_KEY"];
   var body = "",
-    workingKey = "F93B0142C086CD04398C13D45CD5D76D", //Put in the 32-Bit key shared by CCAvenues.
-    accessCode = "AVBE21KB97BJ46EBJB", //Put in the Access Code shared by CCAvenues.
+    workingKey = IS_PRODUCTION === "true" ? PROD_WORKING_KEY : DEV_WORKING_KEY,
+    accessCode = IS_PRODUCTION === "true" ? PROD_ACCESS_CODE : DEV_ACCESS_CODE, //Put in the Access Code shared by CCAvenues.
     encRequest = "",
     formbody = "";
-  var url = request.headers;
-  console.log("🚀 ~ file: ccavRequestHandler.js:10 ~ url:", url);
+
   request.on("data", function (data) {
     body += data;
     encRequest = ccav.encrypt(body, workingKey);

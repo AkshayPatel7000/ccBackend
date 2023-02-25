@@ -4,8 +4,18 @@ var http = require("http"),
   qs = require("querystring");
 
 exports.postRes = function (request, response) {
+  const IS_PRODUCTION = process.env["IS_PRODUCTION"];
+  console.log(
+    "🚀 ~ file: ccavResponseHandler.js:8 ~ IS_PRODUCTION:",
+    IS_PRODUCTION ? "prod" : "dev"
+  );
+  const PROD_ACCESS_CODE = process.env["PROD_ACCESS_CODE"];
+  const DEV_ACCESS_CODE = process.env["DEV_ACCESS_CODE"];
+  const PROD_WORKING_KEY = process.env["PROD_WORKING_KEY"];
+  const DEV_WORKING_KEY = process.env["DEV_WORKING_KEY"];
+
   var ccavEncResponse = "",
-    workingKey = "F93B0142C086CD04398C13D45CD5D76D", //Put in the 32-Bit key shared by CCAvenues.
+    workingKey = IS_PRODUCTION === "true" ? PROD_WORKING_KEY : DEV_WORKING_KEY, //Put in the 32-Bit key shared by CCAvenues.
     ccavResponse = "",
     ccavPOST = "",
     enc = "";
